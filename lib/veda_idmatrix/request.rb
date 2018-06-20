@@ -90,6 +90,7 @@ class VedaIdmatrix::Request < ActiveRecord::Base
       :'card-colour' => (self.entity[:medicare_card_color]),
       :'date-of-expiry' => (self.entity[:medicare_card_expiry])
     }
+    unless self.entity[:medicare_card_number].blank?
 
     drivers_licence_details = {
       :'state-code' => (self.entity[:drivers_licence_state_code]),
