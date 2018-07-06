@@ -392,8 +392,7 @@ describe VedaIdmatrix::Request do
   describe 'medicare' do
     it 'should exclude if not defined' do
       no_medicare = @entity_hash.dup
-      keys = [:medicare_card_number, :medicare_reference_number, :medicare_card_color, :medicare_card_expiry]
-      no_medicare[keys.sample] = ''
+      no_medicare[:medicare_card_number] = ''
 
       @request_no_medicare = VedaIdmatrix::Request.new(access: @access_hash, entity: no_medicare, enquiry: @enquiry_hash)
       expect(@request_no_medicare.to_soap).to_not include('<idm:medicare>')
