@@ -29,5 +29,27 @@ class VedaIdmatrix::Response < ActiveRecord::Base
     end
   end
 
+  def pass
+    to_hash["Envelope"]["Body"]["response"]["response_outcome"]["overall_outcome"] rescue "NO DATA"
+  end
 
+  def score
+    to_hash["Envelope"]["Body"]["response"]["component_responses"]["verification_response"]["verification_outcome"]["total_points"] rescue "0"
+   end
+
+  def indicator
+    to_hash["Envelope"]["Body"]["response"]["component_responses"]["verification_response"]["verification_outcome"]["indicator"] rescue "N/A"
+   end
+
+  def analysis_result
+    to_hash["Envelope"]["Body"]["response"]["component_responses"]["verification_response"]["analysis_results"]["analysis_result"] rescue []
+  end
+
+  def search_result
+    to_hash["Envelope"]["Body"]["response"]["component_responses"]["verification_response"]["search_results"]["search_result"] rescue []
+  end
+
+  def idmatrix_error
+    "Fault String: #{to_hash["Envelope"]["Body"]["Fault"]["faultstring"]}, Status: #{hash["Envelope"]["Body"]["Fault"]["detail"]["policyResult"]['status']}"  rescue ""
+  end
 end

@@ -54,7 +54,7 @@ class VedaIdmatrix::Request < ActiveRecord::Base
       :'family-name' => (self.entity[:family_name]).to_s,
       :'first-given-name' => (self.entity[:first_given_name]).to_s,
     }
-    individual_name = individual_name.merge(:'other-given-name' => (self.entity[:other_given_name]).to_s) if !self.entity[:other_given_name].blank? #rescue false
+    individual_name = individual_name.merge(:'other-given-name' => (self.entity[:other_given_name]).to_s) if self.entity[:other_given_name].present? #rescue false
 
     date_of_birth = (self.entity[:date_of_birth]) #.strftime("%Y-%m-%d")
     gender = (self.entity[:gender].downcase)
@@ -84,16 +84,6 @@ class VedaIdmatrix::Request < ActiveRecord::Base
 
     email_address = (self.entity[:email_address])
 
-    medicare_details = {}
-    unless self.entity[:medicare_card_number].blank?
-      medicare_details = {
-        :'card-number' => (self.entity[:medicare_card_number]),
-        :'reference-number' => (self.entity[:medicare_reference_number]),
-        :'card-colour' => (self.entity[:medicare_card_color]),
-        :'date-of-expiry' => (self.entity[:medicare_card_expiry])
-      }
-    end
-
     drivers_licence_details = {
       :'state-code' => (self.entity[:drivers_licence_state_code]),
       :'number' => (self.entity[:drivers_licence_number])
@@ -103,6 +93,18 @@ class VedaIdmatrix::Request < ActiveRecord::Base
       :'country-code' => (self.entity[:passport_country_code]),
       :'number' => (self.entity[:passport_number])
     }
+
+    medicare_details = {}
+    unless self.entity[:medicare_card_number].blank?
+      medicare_details = {
+        :'card-number' => (self.entity[:medicare_card_number]),
+        :'reference-number' => (self.entity[:medicare_reference_number]),
+        :'middle-name-on-card' => '',
+        :'date-of-expiry' => (self.entity[:medicare_card_expiry]),
+        :'card-colour' => (self.entity[:medicare_card_color])
+      }
+      medicare_details[:'middle-name-on-card'] = self.entity[:other_given_name].to_s.capitalize if self.entity[:other_given_name].present?
+    end
 
     # Make sure items generated in order #5519
     details = ActiveSupport::OrderedHash.new
@@ -115,9 +117,7 @@ class VedaIdmatrix::Request < ActiveRecord::Base
     details[:'email-address'] = email_address
     details[:'drivers-licence-details'] = drivers_licence_details
     details[:'passport-details'] = passport_details
-    # Have to exclude medicare if details missing #5519
     details[:'medicare'] = medicare_details unless medicare_details.empty?
-
     details
   end
 

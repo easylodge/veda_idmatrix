@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe VedaIdmatrix::Request do
   it { should have_one(:response).dependent(:destroy) }
-
   it { should validate_presence_of(:ref_id) }
   it { should validate_presence_of(:access) }
   it { should validate_presence_of(:entity) }
@@ -334,7 +333,6 @@ describe VedaIdmatrix::Request do
         it "includes 'postcode' in xml" do
           expect(@request.xml).to include('<idm:postcode>2999</idm:postcode>')
         end
-
       end
 
       describe "with unformatted address as input" do
@@ -357,7 +355,8 @@ describe VedaIdmatrix::Request do
 
     describe ".id_matrix_operation" do
       it "returns hash" do
-        expect(@request.id_matrix_operation.class).to eq(Hash)
+        have_key(:bar)
+        expect(@request.id_matrix_operation).to have_key(:'date-of-birth')
       end
     end
   end
@@ -392,10 +391,11 @@ describe VedaIdmatrix::Request do
 
   describe 'medicare' do
     it 'should exclude if not defined' do
-      no_mediacare = @entity_hash.dup
-      no_mediacare[:medicare_card_number] = ''
-      @request_no_medicare = VedaIdmatrix::Request.new(access: @access_hash, entity: no_mediacare, enquiry: @enquiry_hash)
-      expect(@request_no_medicare.to_soap).to_not include('<idm:mediacare>')
+      no_medicare = @entity_hash.dup
+      no_medicare[:medicare_card_number] = ''
+
+      @request_no_medicare = VedaIdmatrix::Request.new(access: @access_hash, entity: no_medicare, enquiry: @enquiry_hash)
+      expect(@request_no_medicare.to_soap).to_not include('<idm:medicare>')
     end
   end
 
