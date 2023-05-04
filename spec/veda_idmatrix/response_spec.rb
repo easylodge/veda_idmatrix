@@ -44,6 +44,7 @@ describe VedaIdmatrix::Response do
         # :alternative_email_address => "hpotter@example.com",
         :drivers_licence_state_code => "QLD",
         :drivers_licence_number => "112813476",
+        :drivers_licence_card_number => "123454321",
         # :drivers_licence_date_of_expiry => "2000-01-01",
         # :drivers_licence_card_number => "1234567890",
         :passport_country_code => "AUS",
