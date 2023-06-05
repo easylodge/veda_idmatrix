@@ -98,6 +98,7 @@ class VedaIdmatrix::Request < ActiveRecord::Base
     medicare_details = {}
     unless self.entity[:medicare_card_number].blank?
       medicare_details = {
+        :'middle-name-initials' => (self.entity[:medicare_middle_name_initials]),
         :'card-number' => (self.entity[:medicare_card_number]),
         :'reference-number' => (self.entity[:medicare_reference_number]),
         :'middle-name-on-card' => '',
