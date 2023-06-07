@@ -98,12 +98,14 @@ class VedaIdmatrix::Request < ActiveRecord::Base
     medicare_details = {}
     unless self.entity[:medicare_card_number].blank?
       medicare_details = {
+        :'middle-initial-on-card' => (self.entity[:medicare_middle_initial_on_card]),
         :'card-number' => (self.entity[:medicare_card_number]),
         :'reference-number' => (self.entity[:medicare_reference_number]),
-        :'middle-name-on-card' => (self.entity[:medicare_middle_name_on_card]),
+        :'middle-name-on-card' => '',
         :'date-of-expiry' => (self.entity[:medicare_card_expiry]),
         :'card-colour' => (self.entity[:medicare_card_color])
       }
+      medicare_details[:'middle-name-on-card'] = self.entity[:other_given_name].to_s.capitalize if self.entity[:other_given_name].present?
     end
 
     # Make sure items generated in order #5519
