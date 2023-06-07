@@ -65,7 +65,7 @@ describe VedaIdmatrix::Request do
       },
       :place_of_birth => "Little Whinging",
       :country_of_birth => "AUS",
-      :medicare_middle_name_on_card => "Ray",
+      :medicare_middle_initial_on_card => "R",
       :medicare_card_number => "1234567890",
       :medicare_reference_number => "1",
       :medicare_card_expiry => "2000-01",
