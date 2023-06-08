@@ -100,7 +100,7 @@ class VedaIdmatrix::Request < ActiveRecord::Base
       medicare_details = {
         :'card-number' => (self.entity[:medicare_card_number]),
         :'reference-number' => (self.entity[:medicare_reference_number]),
-        :'middle-name-on-card' => '',
+        :'middle-name-on-card' => (self.entity[:medicare_middle_initial_on_card]),
         :'date-of-expiry' => (self.entity[:medicare_card_expiry]),
         :'card-colour' => (self.entity[:medicare_card_color])
       }
