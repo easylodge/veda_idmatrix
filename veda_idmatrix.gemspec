@@ -6,8 +6,8 @@ require 'veda_idmatrix/version'
 Gem::Specification.new do |spec|
   spec.name          = "veda_idmatrix"
   spec.version       = VedaIdmatrix::VERSION
-  spec.authors       = ["Andre Mouton"]
-  spec.email         = ["andre@amtek.co.za", "info@shuntyard.co.za", "info@easylodge.com.au"]
+  spec.authors       = ["Andre Mouton", "Jean le Roux"]
+  spec.email         = ["info@easylodge.com.au", "info@shuntyard.com"]
   spec.summary       = %q{Veda IDMatrix Identity Verification.}
   spec.description   = %q{Rails gem for using Veda IDMatrix Identity Verification service.}
   spec.homepage      = "https://github.com/easylodge/veda_idmatrix"
