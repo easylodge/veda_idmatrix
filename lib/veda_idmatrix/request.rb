@@ -53,6 +53,7 @@ class VedaIdmatrix::Request < ActiveRecord::Base
     individual_name = {
       :'family-name' => (self.entity[:family_name]).to_s,
       :'first-given-name' => (self.entity[:first_given_name]).to_s,
+      :'other-given-name' => (self.entity[:other_given_name]).to_s
     }
     individual_name = individual_name.merge(:'other-given-name' => (self.entity[:other_given_name]).to_s) if self.entity[:other_given_name].present? #rescue false
 
