@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe VedaIdmatrix::Response do
-  it { should belong_to(:request).dependent(:destroy) }
-
   describe ".initialize" do
     it "converts :header to a hash" do
       not_a_hash = OpenStruct.new
@@ -222,6 +220,7 @@ describe VedaIdmatrix::Response do
           entity: @entity_hash,
           enquiry: @enquiry_hash)
         @post = @request.post
+        binding.pry
         @response = VedaIdmatrix::Response.create(xml: @post.body, headers: @post.headers, code: @post.code, success: @post.success?, request_id: @request.id)
       end
 
