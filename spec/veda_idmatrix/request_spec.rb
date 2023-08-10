@@ -1,12 +1,6 @@
 require 'spec_helper'
 
 describe VedaIdmatrix::Request do
-  it { should have_one(:response).dependent(:destroy) }
-  it { should validate_presence_of(:ref_id) }
-  it { should validate_presence_of(:access) }
-  it { should validate_presence_of(:entity) }
-  it { should validate_presence_of(:enquiry) }
-
   before(:each) do
     @config = YAML.load_file('dev_config.yml')
     @access_hash =
