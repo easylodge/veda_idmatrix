@@ -25,9 +25,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rails', '~> 7.0.0'
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'shoulda-matchers', '~> 5.0'
-  spec.add_dependency 'rexml', '~> 3.2', '>= 3.2.4'
   spec.add_development_dependency 'pry'
 
+  spec.add_dependency 'rexml', '~> 3.2', '>= 3.2.4'
   spec.add_dependency "nokogiri"
   spec.add_dependency "httparty"
   spec.add_dependency 'activesupport'
