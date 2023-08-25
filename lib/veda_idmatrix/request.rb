@@ -25,7 +25,8 @@ class VedaIdmatrix::Request < ActiveRecord::Base
   end
 
   def to_xml_body
-    doc = self.to_dom('request', self.id_matrix_operation, {:'client-reference'=>self.enquiry[:client_reference], :'reason-for-enquiry'=>self.enquiry[:reason_for_enquiry]}).to_xml.gsub(/(<[\/]?)/,'\1idm:')
+    # gsub(/verify="true"&gt;/, "") this attribute somehow finds it's way into the XML where it shouldn't be. I have no idea what does it or how to fix it. So to get this running again I'm just removing it.
+    doc = self.to_dom('request', self.id_matrix_operation, {:'client-reference'=>self.enquiry[:client_reference], :'reason-for-enquiry'=>self.enquiry[:reason_for_enquiry]}).to_xml.gsub(/(<[\/]?)/,'\1idm:').gsub(/verify="true"&gt;/, "")
     self.xml = doc.gsub('<idm:?xml version="1.0"?>','')
   end
 
@@ -78,8 +79,8 @@ class VedaIdmatrix::Request < ActiveRecord::Base
 
     phone = {
       :'numbers' => {
-        :'home-phone-number verify="true"' => (self.entity[:home_phone_number]),
-        :'mobile-phone-number verify="true"' => (self.entity[:mobile_phone_number])
+        :'home-phone-number verify="true"' => (self.entity[:home_phone_number])
+        # :'mobile-phone-number verify="1"' => (self.entity[:mobile_phone_number])
       }
     }
 
@@ -115,7 +116,7 @@ class VedaIdmatrix::Request < ActiveRecord::Base
     details[:'date-of-birth'] = date_of_birth
     details[:'gender'] = gender
     details[:'current-address'] = current_address
-    details[:'phone']=  phone
+    details[:'phone'] =  phone
     details[:'email-address'] = email_address
     details[:'drivers-licence-details'] = drivers_licence_details
     details[:'passport-details'] = passport_details
