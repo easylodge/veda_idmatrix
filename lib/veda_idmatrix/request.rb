@@ -54,6 +54,7 @@ class VedaIdmatrix::Request < ActiveRecord::Base
       :'family-name' => (self.entity[:family_name]).to_s,
       :'first-given-name' => (self.entity[:first_given_name]).to_s
     }
+
     individual_name = individual_name.merge(:'other-given-name' => (self.entity[:other_given_name]).to_s) if self.entity[:other_given_name].present? #rescue false
 
     date_of_birth = (self.entity[:date_of_birth]) #.strftime("%Y-%m-%d")
@@ -77,8 +78,14 @@ class VedaIdmatrix::Request < ActiveRecord::Base
 
     phone = {
       :'numbers' => {
-        :'home-phone-number verify="true"' => (self.entity[:home_phone_number]),
-        :'mobile-phone-number verify="true"' => (self.entity[:mobile_phone_number])
+        :'home-phone-number' => {
+          attributes: { verify: 1 },
+          value: (self.entity[:home_phone_number])
+        },
+        :'mobile-phone-number' => {
+          attributes: { verify: 1 },
+          value: (self.entity[:mobile_phone_number])
+        }
       }
     }
 
